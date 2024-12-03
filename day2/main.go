@@ -1,4 +1,5 @@
 /*
+* Challenge 1
 *
 *	This example data contains six reports each containing five levels.
 
@@ -19,6 +20,22 @@
 *	So, in this example, 2 reports are safe.
 *
 *	Analyze the unusual data from the engineers. How many reports are safe?
+
+* 	Challenge 2
+*	Now, the same rules apply as before, except if removing a single level from an unsafe report would make it safe, the report instead counts as safe.
+*
+*	More of the above example's reports are now safe:
+*
+*	    7 6 4 2 1: Safe without removing any level.
+*	    1 2 7 8 9: Unsafe regardless of which level is removed.
+*	    9 7 6 2 1: Unsafe regardless of which level is removed.
+*	    1 3 2 4 5: Safe by removing the second level, 3.
+*	    8 6 4 4 1: Safe by removing the third level, 4.
+*	    1 3 6 7 9: Safe without removing any level.
+*
+*	Thanks to the Problem Dampener, 4 reports are actually safe!
+*
+*	Update your analysis by handling situations where the Problem Dampener can remove a single level from unsafe reports. How many reports are now safe?
  */
 package main
 
@@ -70,23 +87,11 @@ func main() {
 		data = append(data, numbers)
 	}
 
-	//answer to challenge 1
-	var finalCount int
+	res := challengeOneResult(data)
+	resChall2 := challengeTwoResult(data)
 
-	//Iterate over data to get the number od levels that are safe
-	for _, line := range data {
-		increasing := isIncreasing(line)
-		decreasing := isDecreasing(line)
-		validDifferences := hasValidDiff(line)
-
-		if (increasing || decreasing) && validDifferences {
-			finalCount++
-		}
-	}
-
-
-	fmt.Println("finalValue", finalCount)
-	
+	fmt.Println("Challenge One res:", res)
+	fmt.Println("Challenge Two res:", resChall2)
 }
 
 //Get bool value if all values are incresing in the line
@@ -126,4 +131,57 @@ func abs (x int) int {
 		return -x
 	}
 	return x
+}
+
+//Get challenge One Result
+func challengeOneResult (data [][]int) int {
+	var finalCount int
+
+	//Iterate over data to get the number od levels that are safe
+	for _, line := range data {
+		increasing := isIncreasing(line)
+		decreasing := isDecreasing(line)
+		validDifferences := hasValidDiff(line)
+
+		if (increasing || decreasing) && validDifferences {
+			finalCount++
+		}
+	}
+	return finalCount
+}
+
+//Get the Challenge two answer
+func challengeTwoResult(data [][]int) int {
+	var finalCount int
+
+	for _, line := range data {
+		if isSafe(line) {
+			finalCount++
+			continue
+		}
+		// Check if removing one level makes the line safe
+		for i := 0; i < len(line); i++ {
+			reducedLine := removeIndex(line, i)
+			if isSafe(reducedLine) {
+				finalCount++
+				break
+			}
+		}
+		
+	}
+	return finalCount
+}
+
+// Helper function to determine if a report is safe
+func isSafe(line []int) bool {
+	// Check if the line is increasing or decreasing AND has valid differences
+	return (isIncreasing(line) || isDecreasing(line)) && hasValidDiff(line) 
+}
+
+// Helper function to remove an index from a slice
+func removeIndex(slice []int, index int) []int {
+	newSlice := make([]int, 0, len(slice)-1)
+	newSlice = append(newSlice, slice[:index]...)
+	newSlice = append(newSlice, slice[index+1:]...)
+	return newSlice
 }
