@@ -35,9 +35,9 @@ Each folder typically contains:
 ## Progress
 
 | Day  | Challenge 1 ✅ | Challenge 2 ✅ | Language Used |
-|------|---------------|---------------|----------------|
+|------|----------------|---------------|----------------|
 | 01   | ✅ Completed  | ✅ Completed  | Go             |
 | 02   | ✅ Completed  | ✅ Completed  | Go             |
-| 03   | 🚧 In Progress| ❌ Not Started| TBD            |
+| 03   | 🚧 In Progress| ❌ Not Started| Go             |
 | ...  |               |                |                |
 

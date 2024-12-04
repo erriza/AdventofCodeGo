@@ -62,8 +62,6 @@ func main() {
 	defer file.Close()
 
 	var data [][]int
-	// var data2 []int
-	// var count int
 
 	scanner := bufio.NewScanner(file)
 
