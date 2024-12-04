@@ -38,6 +38,5 @@ Each folder typically contains:
 |------|----------------|---------------|----------------|
 | 01   | ✅ Completed  | ✅ Completed  | Go             |
 | 02   | ✅ Completed  | ✅ Completed  | Go             |
-| 03   | 🚧 In Progress| ❌ Not Started| Go             |
-| ...  |               |                |                |
-
+| 03   | ✅ Completed  | 🚧 In Progress| Go             |
+| 04   | ❌ Not Started|                |               |
