@@ -29,6 +29,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 func check(e error) {
@@ -50,33 +51,66 @@ func main() {
 
 	//create the variable to sum the values
 	var total int
+	var totalChallenge2 int
 
-	//create a Regex expresion 
+	//create a Regex expresion for mul(X, Y)
 	re := regexp.MustCompile(`\bm(?:ul|xul)\((\d{1,3}),\s*(\d{1,3})\)`)
+
+	//create Regex expresion for do
+	reDo := regexp.MustCompile(`\bdo\(\)`)
+
+	//create Regex expresion for dont
+	reDont := regexp.MustCompile(`\bdon't\(\)`)
 
 	//Iterate over the scanner object
 	for scanner.Scan() {
 		//get a line from the scanner object
 		line := scanner.Text()
-		fmt.Println("this is line", line)
 
 		//apply the regex Expresion over the line
 		matches := re.FindAllStringSubmatch(line, -1)
-		fmt.Println("this is matches", matches)
 
 		//Go through the values to sum the total
 		for _, match := range matches {
-
-			fmt.Println("this is match", match)
-
 			num1, _ := strconv.Atoi(match[1])
 			num2, _ := strconv.Atoi(match[2])
-	
-		fmt.Println("this is num1", num1)
-		fmt.Println("this is num2", num2)
 
 			total += num1 * num2
 		}
 	}
 	fmt.Println("total", total)
+
+	//Re open the file again for new scanner
+	file2, err := os.Open("./day3.txt")
+	check(err)
+	defer file2.Close()
+
+	//Reset the scanner for challenge 2
+	scanner2 := bufio.NewScanner(file2)
+    var mulEnabled = true
+
+    // Loop through scanner lines (challenge 2)
+	for scanner2.Scan() {
+		line := scanner2.Text()
+
+		// matches := re.FindAllStringSubmatch(line, -1)
+		words:= strings.Split(line, " ")
+
+		for _, word := range words {
+			if reDo.MatchString(word) {
+					mulEnabled = true
+			} else if reDont.MatchString(word) {
+					mulEnabled = false
+			} else if re.MatchString(word) {
+					if mulEnabled {
+							// Extract numbers from the mul instruction
+							num1, _ := strconv.Atoi(re.FindStringSubmatch(word)[1])
+							num2, _ := strconv.Atoi(re.FindStringSubmatch(word)[2])
+							total += num1 * num2
+					}
+			}
+	}
+}
+
+fmt.Println("Total:", totalChallenge2)
 }

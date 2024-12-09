@@ -34,9 +34,12 @@ Each folder typically contains:
 
 ## Progress
 
-| Day  | Challenge 1 ✅ | Challenge 2 ✅ | Language Used |
-|------|----------------|---------------|----------------|
-| 01   | ✅ Completed  | ✅ Completed  | Go             |
-| 02   | ✅ Completed  | ✅ Completed  | Go             |
-| 03   | ✅ Completed  | 🚧 In Progress| Go             |
-| 04   | ❌ Not Started|                |               |
+| Day  |Challenge 1 ✅ |Challenge 2 ✅| Language Used |
+|------|---------------|---------------|---------------|
+| 01   | ✅ Completed  | ✅ Completed  | Go           |
+| 02   | ✅ Completed  | ✅ Completed  | Go           |
+| 03   | ✅ Completed  | 🚧 In Progress| Go           |
+| 04   | ✅ Completed  | 🚧 In Progress|              |
+| 05   | ❌ Not Started|                |             |
+| 06   | ❌ Not Started|                |             |
+| 07   | ❌ Not Started|                |             |
