@@ -81,8 +81,11 @@ var matrix[][]string
 
 
 func main () {
+	//Read file and create line array
 	file := ReadFile("./day4.txt")
+	//create 2D matrix to look for chars
 	grid := createGrid(file)
+	//Iterate over 2D matrix and sum the num of coincidences
 	score := TraverseGrid(grid)
  	fmt.Println("totalcount:", score)
 
