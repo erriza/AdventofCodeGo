@@ -41,6 +41,35 @@
 *
 * 	Take a look at the little Elf's word search. How many times does XMAS appear?
 *
+* --- Part Two ---
+*
+* The Elf looks quizzically at you. Did you misunderstand the assignment?
+*
+* Looking for the instructions, you flip over the word search to find that this isn't actually an XMAS puzzle; it's an X-MAS puzzle in which you're supposed to find two MAS in the shape of an X. One way to achieve that is like this:
+*
+* M.S
+* .A.
+* M.S
+*
+* Irrelevant characters have again been replaced with . in the above diagram. Within the X, each MAS can be written forwards or backwards.
+*
+* Here's the same example from before, but this time all of the X-MASes have been kept instead:
+*
+* .M.S......
+* ..A..MSMS.
+* .M.S.MAA..
+* ..A.ASMSM.
+* .M.S.M....
+* ..........
+* S.S.S.S.S.
+* .A.A.A.A..
+* M.M.M.M.M.
+* ..........
+*
+* In this example, an X-MAS appears 9 times.
+*
+* Flip the word search from the instructions back over to the word search side and try again. How many times does an X-MAS appear?
+*
 *
  */
 
@@ -86,7 +115,7 @@ func main () {
 	//create 2D matrix to look for chars
 	grid := createGrid(file)
 	//Iterate over 2D matrix and sum the num of coincidences
-	score := TraverseGrid(grid)
+	score := TraverseGrid2(grid)
  	fmt.Println("totalcount:", score)
 
 }
@@ -121,23 +150,24 @@ func createGrid(lines []string) [][]string {
 	return matrix
 }
 
+//Challenge 1
+// func TraverseGrid(grid [][]string) int {
+// 	score := 0
+// 	for x, row := range grid {
+// 		for y, char := range row {
+// 			if char == wordList[0] {
+// 				for _, direction := range directions {
+// 					if findXMAS(x, y, 1, direction, grid) {
+// 						score += 1
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// 	return score
+// }
 
-func TraverseGrid(grid [][]string) int {
-	score := 0
-	for x, row := range grid {
-		for y, char := range row {
-			if char == wordList[0] {
-				for _, direction := range directions {
-					if findXMAS(x, y, 1, direction, grid) {
-						score += 1
-					}
-				}
-			}
-		}
-	}
-	return score
-}
-
+//Challenge 1 FIND XMAS
 func findXMAS(x, y, wordPosition int, direction []int, grid[][]string) bool {
 	xNext := x + direction[0]
 	yNext := y + direction[1]
@@ -157,3 +187,44 @@ func findXMAS(x, y, wordPosition int, direction []int, grid[][]string) bool {
 	
 }
 
+//Challenge 2 find MAS
+func FindMAS(x, y int, grid [][]string, wordList []string) bool {
+    xL, yT := x-1, y+1 // Top-left neighbor
+    xR, yD := x+1, y-1 // Bottom-right neighbor
+
+	//check if indices are within bounds
+	if xL < 0 || xR >= len(grid) || yT < 0 || yD < 0 || yT >= len(grid[xL]) || yD >= len(grid[xR]) {
+		return false
+	}
+
+	//declaring coordinates
+	topLeft := grid[xL][yT]
+	bottomRight := grid[xR][yD]
+	topRight := grid[xR][yT]
+	bottomLeft := grid[xL][yD]
+
+	//getting letters M and S to look for
+	word1, word3 := wordList[1], wordList[3]
+
+	//looking
+	isDiagonalMatch := (topLeft == word1 && bottomRight == word3) || (topLeft == word3 && bottomRight == word1)
+    isAntiDiagonalMatch := (topRight == word1 && bottomLeft == word3) || (topRight == word3 && bottomLeft == word1)
+
+	return isDiagonalMatch && isAntiDiagonalMatch
+}
+
+//Challenge 2
+func TraverseGrid2(grid [][]string) int {
+    score := 0
+    for x, row := range grid {
+        for y, char := range row {
+            if char == wordList[2] {
+                if FindMAS(x, y, grid, wordList) {
+                    score += 1
+                }
+
+            }
+        }
+    }
+    return score
+}

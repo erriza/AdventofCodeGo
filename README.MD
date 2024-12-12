@@ -39,7 +39,7 @@ Each folder typically contains:
 | 01   | ✅ Completed  | ✅ Completed  | Go           |
 | 02   | ✅ Completed  | ✅ Completed  | Go           |
 | 03   | ✅ Completed  | 🚧 In Progress| Go           |
-| 04   | ✅ Completed  | 🚧 In Progress|              |
-| 05   | ❌ Not Started|                |             |
+| 04   | ✅ Completed  | ✅ Completed  | Go           |
+| 05   | 🚧 In Progress|                |             |
 | 06   | ❌ Not Started|                |             |
 | 07   | ❌ Not Started|                |             |
